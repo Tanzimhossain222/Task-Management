@@ -47,6 +47,16 @@ const TaskBoard = () => {
     setEditTask(null);
   };
 
+  const handleDeleteTask = (id) => {
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    setTasks(updatedTasks);
+  };
+
+  const handleDeleteAll = () => {
+    tasks.length === 0 && alert("No tasks to delete");
+    setTasks([]);
+  };
+
   return (
     <section className="mb-20" id="tasks">
       {isModalOpen && (
@@ -62,8 +72,15 @@ const TaskBoard = () => {
         </div>
 
         <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
-          <TaskActions onAddClick={() => setIsModalOpen(true)} />
-          <TaskList tasks={tasks} onEdit={handleEditTask} />
+          <TaskActions
+            onAddClick={() => setIsModalOpen(true)}
+            deleteAll={handleDeleteAll}
+          />
+          <TaskList
+            tasks={tasks}
+            onEdit={handleEditTask}
+            onDelete={handleDeleteTask}
+          />
         </div>
       </div>
     </section>
