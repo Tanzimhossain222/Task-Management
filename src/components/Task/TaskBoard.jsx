@@ -17,15 +17,45 @@ const intialTasks = {
 const TaskBoard = () => {
   const [tasks, setTasks] = useState([intialTasks]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editTask, setEditTask] = useState(null);
 
-  const handleAddTask = (newtask) => {
-    setTasks([...tasks, newtask]);
+  const handleAddEditTask = (newTask, isAdd) => {
+    if (isAdd) {
+      setTasks([...tasks, newTask]);
+      setIsModalOpen(false);
+    } else {
+      const UpdateTask = tasks.map((task) => {
+        if (task.id === newTask.id) {
+          return newTask;
+        }
+        return task;
+      });
+
+      setTasks(UpdateTask);
+      setIsModalOpen(false);
+      setEditTask(null);
+    }
+  };
+
+  const handleEditTask = (task) => {
+    setEditTask(task);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseClick = () => {
     setIsModalOpen(false);
+    setEditTask(null);
   };
 
   return (
     <section className="mb-20" id="tasks">
-      {isModalOpen && <AddTaskModal onSaved={handleAddTask} />}
+      {isModalOpen && (
+        <AddTaskModal
+          onSaved={handleAddEditTask}
+          taskToUpdate={editTask}
+          onCloseClick={handleCloseClick}
+        />
+      )}
       <div className="container">
         <div className="p-2 flex justify-end">
           <SearchTask />
@@ -33,7 +63,7 @@ const TaskBoard = () => {
 
         <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
           <TaskActions onAddClick={() => setIsModalOpen(true)} />
-          <TaskList tasks={tasks} />
+          <TaskList tasks={tasks} onEdit={handleEditTask} />
         </div>
       </div>
     </section>

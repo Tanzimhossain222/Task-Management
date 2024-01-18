@@ -1,16 +1,16 @@
 import { useState } from "react";
 
-const defaultTask = {
-  id: crypto.randomUUID(),
-  title: "",
-  description: "",
-  tags: [],
-  priority: "",
-  isFavorite: false,
-};
+const AddTaskModal = ({ onSaved, taskToUpdate, onCloseClick }) => {
+  const [task, setTask] = useState(taskToUpdate || {
+    id: crypto.randomUUID(),
+    title: "",
+    description: "",
+    tags: [],
+    priority: "",
+    isFavorite: false,
+  });
 
-const AddTaskModal = ({ onSaved }) => {
-  const [task, setTask] = useState(defaultTask);
+  const [isAdd, setIsAdd] = useState(Object.is(taskToUpdate, null));
 
   const handleChange = (e) => {
     const { name } = e.target;
@@ -28,10 +28,8 @@ const AddTaskModal = ({ onSaved }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSaved({
-        ...task,
-        id: crypto.randomUUID(),
-    });
+    onSaved(task, isAdd);
+    
   };
 
   return (
@@ -42,7 +40,7 @@ const AddTaskModal = ({ onSaved }) => {
         onSubmit={handleSubmit}
       >
         <h2 className="mb-9 text-center text-2xl font-bold text-white lg:mb-11 lg:text-[28px]">
-          Add New Task
+          {isAdd ? "Add New Task" : "Edit Task"}
         </h2>
 
         <div className="space-y-9 text-white lg:space-y-10">
@@ -107,10 +105,18 @@ const AddTaskModal = ({ onSaved }) => {
 
         <div className="mt-16 flex justify-center lg:mt-20">
           <button
-            type="submit"
-            className="rounded bg-blue-600 px-4 py-2 text-white transition-all hover:opacity-80"
+            className="rounded bg-red-600 px-4 py-2 text-white transition-all hover:opacity-80 me-2"
+            onClick={onCloseClick}
           >
-            Create new Task
+            Close
+          </button>
+
+          <button
+            type="submit"
+            className="rounded bg-blue-600 px-4 py-2 text-white transition-all hover:opacity-80 ms-2"
+            // onClick={() => onSaved(task, isAdd)}
+          >
+            Save
           </button>
         </div>
       </form>
