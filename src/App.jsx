@@ -1,7 +1,13 @@
+import Footer from "./components/footer";
+import HeroSection from "./components/heroSection";
+import Header from "./components/navbar";
+
 const App = () => {
   return (
     <div>
-      <h2 className="text-cyan-600 text-2xl">Hello World.!</h2>
+      <Header />
+      <HeroSection />
+      <Footer />
     </div>
   );
 };
