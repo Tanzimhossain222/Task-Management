@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 
 const TaskList = ({ tasks }) => {
@@ -46,8 +47,8 @@ const TaskList = ({ tasks }) => {
                 </td>
                 <td>
                   <ul className="flex justify-center gap-1.5 flex-wrap">
-                    {task.tags.map((tag) => (
-                      <li key={tag}>
+                    {task.tags.map((tag, i) => (
+                      <li key={i}>
                         <span className="inline-block h-5 whitespace-nowrap rounded-[45px] bg-[#00D991A1] px-2.5 text-sm capitalize text-[#F4F5F6]">
                           {tag}
                         </span>

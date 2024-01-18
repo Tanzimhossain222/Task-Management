@@ -18,9 +18,14 @@ const TaskBoard = () => {
   const [tasks, setTasks] = useState([intialTasks]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleAddTask = (newtask) => {
+    setTasks([...tasks, newtask]);
+    setIsModalOpen(false);
+  };
+
   return (
     <section className="mb-20" id="tasks">
-      {isModalOpen && <AddTaskModal />}
+      {isModalOpen && <AddTaskModal onSaved={handleAddTask} />}
       <div className="container">
         <div className="p-2 flex justify-end">
           <SearchTask />
