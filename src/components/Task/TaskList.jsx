@@ -1,7 +1,6 @@
 import { FaStar } from "react-icons/fa";
 
 const TaskList = ({ tasks }) => {
-  console.log(tasks);
   return (
     <>
       <div className="overflow-auto">
