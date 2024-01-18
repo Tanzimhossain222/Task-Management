@@ -1,4 +1,5 @@
 import AddTaskModal from "./AddTaskModal";
+import { NoTask } from "./NoTask";
 import SearchTask from "./SearchTask";
 import TaskActions from "./TaskActions";
 import TaskList from "./TaskList";
@@ -93,12 +94,16 @@ const TaskBoard = () => {
             onAddClick={() => setIsModalOpen(true)}
             deleteAll={handleDeleteAll}
           />
-          <TaskList
-            tasks={tasks}
-            onEdit={handleEditTask}
-            onDelete={handleDeleteTask}
-            onFav={handleFavoriteTask}
-          />
+          {tasks.length > 0 ? (
+            <TaskList
+              tasks={tasks}
+              onEdit={handleEditTask}
+              onDelete={handleDeleteTask}
+              onFav={handleFavoriteTask}
+            />
+          ) : (
+            <NoTask />
+          )}
         </div>
       </div>
     </section>
